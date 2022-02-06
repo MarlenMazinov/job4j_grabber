@@ -30,12 +30,14 @@ public class SqlRuDateTimeParser implements DateTimeParser {
                 DateTimeFormatter.ofPattern("d MMMM, yy HH:mm");
         String[] arr = parse.split(" ");
         String changedParse;
-        LocalDateTime rsl = LocalDateTime.now();
+        LocalDateTime rsl;
         if (arr.length == 4) {
             String month = arr[1].replace(",", "");
             if (MONTHS.containsKey(month)) {
                 changedParse = parse.replace(arr[1], MONTHS.get(month).concat(","));
                 rsl = LocalDateTime.parse(changedParse, formatter);
+            } else {
+                throw new IllegalArgumentException("There not found correct date.");
             }
         } else {
             if (arr.length == 2) {
@@ -43,13 +45,13 @@ public class SqlRuDateTimeParser implements DateTimeParser {
                     String[] timeArr = arr[1].split(":");
                     rsl = TODAYORYESTERDAY.get(arr[0]).atTime(Integer.parseInt(timeArr[0]),
                             Integer.parseInt(timeArr[1]));
+                } else {
+                    throw new IllegalArgumentException("There not found correct date.");
                 }
+            } else {
+                throw new IllegalArgumentException("There not found correct date.");
             }
         }
         return rsl;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(new SqlRuDateTimeParser().parse("вчера, 21:22"));
     }
 }
