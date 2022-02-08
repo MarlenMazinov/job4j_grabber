@@ -21,8 +21,8 @@ public class SqlRuDateTimeParser implements DateTimeParser {
             Map.entry("ноя", "ноября"),
             Map.entry("дек", "декабря"));
     private static final Map<String, LocalDate> TODAYORYESTERDAY =
-            Map.of("сегодня,", LocalDate.now(),
-                    "вчера,", LocalDate.now().minusDays(1));
+            Map.of("сегодня", LocalDate.now(),
+                    "вчера", LocalDate.now().minusDays(1));
 
     @Override
     public LocalDateTime parse(String parse) {
@@ -32,22 +32,14 @@ public class SqlRuDateTimeParser implements DateTimeParser {
         String[] arr = parse.split(" ");
         String changedParse;
         LocalDateTime rsl;
-        if (arr.length == 4) {
-            if (MONTHS.containsKey(arr[1])) {
-                changedParse = parse.replace(arr[1], MONTHS.get(arr[1]));
-                rsl = LocalDateTime.parse(changedParse, formatter);
-            } else {
-                throw new IllegalArgumentException("There not found correct date.");
-            }
+        if (MONTHS.containsKey(arr[1])) {
+            changedParse = parse.replace(arr[1], MONTHS.get(arr[1]));
+            rsl = LocalDateTime.parse(changedParse, formatter);
         } else {
-            if (arr.length == 2) {
-                if (TODAYORYESTERDAY.containsKey(arr[0])) {
-                    String[] timeArr = arr[1].split(":");
-                    rsl = TODAYORYESTERDAY.get(arr[0]).atTime(Integer.parseInt(timeArr[0]),
-                            Integer.parseInt(timeArr[1]));
-                } else {
-                    throw new IllegalArgumentException("There not found correct date.");
-                }
+            if (TODAYORYESTERDAY.containsKey(arr[0])) {
+                String[] timeArr = arr[1].split(":");
+                rsl = TODAYORYESTERDAY.get(arr[0]).atTime(Integer.parseInt(timeArr[0]),
+                        Integer.parseInt(timeArr[1]));
             } else {
                 throw new IllegalArgumentException("There not found correct date.");
             }
