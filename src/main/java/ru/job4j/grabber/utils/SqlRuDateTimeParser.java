@@ -27,14 +27,14 @@ public class SqlRuDateTimeParser implements DateTimeParser {
     @Override
     public LocalDateTime parse(String parse) {
         DateTimeFormatter formatter =
-                DateTimeFormatter.ofPattern("d MMMM, yy HH:mm");
+                DateTimeFormatter.ofPattern("d MMMM yy HH:mm");
+        parse = parse.replaceAll(",", "");
         String[] arr = parse.split(" ");
         String changedParse;
         LocalDateTime rsl;
         if (arr.length == 4) {
-            String month = arr[1].replace(",", "");
-            if (MONTHS.containsKey(month)) {
-                changedParse = parse.replace(arr[1], MONTHS.get(month).concat(","));
+            if (MONTHS.containsKey(arr[1])) {
+                changedParse = parse.replace(arr[1], MONTHS.get(arr[1]));
                 rsl = LocalDateTime.parse(changedParse, formatter);
             } else {
                 throw new IllegalArgumentException("There not found correct date.");
