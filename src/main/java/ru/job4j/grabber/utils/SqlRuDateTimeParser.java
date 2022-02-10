@@ -21,12 +21,14 @@ public class SqlRuDateTimeParser implements DateTimeParser {
             Map.entry("дек", "декабря"));
     private static final DateTimeFormatter FORMATTER =
             DateTimeFormatter.ofPattern("d MMMM yy HH:mm");
+    private static final String TODAY = "сегодня";
+    private static final String YESTERDAY = "вчера";
 
     @Override
     public LocalDateTime parse(String parse) {
         Map<String, LocalDate> dayMap =
-                Map.of("сегодня", LocalDate.now(),
-                        "вчера", LocalDate.now().minusDays(1));
+                Map.of(TODAY, LocalDate.now(),
+                        YESTERDAY, LocalDate.now().minusDays(1));
         parse = parse.replaceAll(",", "");
         String[] arr = parse.split(" ");
         String changedParse;
