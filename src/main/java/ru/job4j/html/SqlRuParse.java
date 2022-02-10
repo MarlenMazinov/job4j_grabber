@@ -18,7 +18,6 @@ public class SqlRuParse {
             doc = Jsoup.connect(pages.get(i).attr("href")).get();
             getInformation(doc);
         }
-        getPost("https://www.sql.ru/forum/1325330/lidy-be-fe-senior-cistemnye-analitiki-qa-i-devops-moskva-do-200t");
     }
 
     private static void getInformation(Document document) {
