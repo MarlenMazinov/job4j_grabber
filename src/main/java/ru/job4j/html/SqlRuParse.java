@@ -31,7 +31,7 @@ public class SqlRuParse {
         }
     }
 
-    public static void getPost(String link) throws IOException {
+    public static Post getPost(String link) throws IOException {
         Post post = new Post();
         Document doc = Jsoup.connect(link).get();
         post.setId(Integer.parseInt(doc.select("td.msgFooter").get(0).child(0).text()));
@@ -49,5 +49,6 @@ public class SqlRuParse {
         String[] arr = doc.select("td.msgFooter").get(0).text().split("\u00A0");
         SqlRuDateTimeParser parser = new SqlRuDateTimeParser();
         post.setCreated(parser.parse(arr[0]));
+        return post;
     }
 }
