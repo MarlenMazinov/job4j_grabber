@@ -4,6 +4,10 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import ru.job4j.grabber.utils.SqlRuDateTimeParser;
+
+import java.io.IOException;
+import java.util.StringJoiner;
 
 public class SqlRuParse {
     public static void main(String[] args) throws Exception {
@@ -14,6 +18,7 @@ public class SqlRuParse {
             doc = Jsoup.connect(pages.get(i).attr("href")).get();
             getInformation(doc);
         }
+        getPost("https://www.sql.ru/forum/1325330/lidy-be-fe-senior-cistemnye-analitiki-qa-i-devops-moskva-do-200t");
     }
 
     private static void getInformation(Document document) {
@@ -25,5 +30,25 @@ public class SqlRuParse {
                 System.out.println(tr.child(5).text());
             }
         }
+    }
+
+    public static void getPost(String link) throws IOException {
+        Post post = new Post();
+        Document doc = Jsoup.connect(link).get();
+        post.setId(Integer.parseInt(doc.select("td.msgFooter").get(0).child(0).text()));
+        post.setTitle(doc.select("td.messageHeader").get(0).text());
+        post.setLink(link);
+        Elements msgBody = doc.select("td.msgBody").get(1).children();
+        StringJoiner stringJoiner = new StringJoiner(System.lineSeparator());
+        stringJoiner.add(doc.select("td.msgBody").get(1).text());
+        for (Element el : msgBody) {
+            if (el.hasText()) {
+                stringJoiner.add(el.text());
+            }
+        }
+        post.setDescription(stringJoiner.toString());
+        String[] arr = doc.select("td.msgFooter").get(0).text().split("\u00A0");
+        SqlRuDateTimeParser parser = new SqlRuDateTimeParser();
+        post.setCreated(parser.parse(arr[0]));
     }
 }
