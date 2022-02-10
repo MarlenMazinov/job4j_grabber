@@ -1,6 +1,5 @@
 package ru.job4j.grabber.utils;
 
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -20,29 +19,30 @@ public class SqlRuDateTimeParser implements DateTimeParser {
             Map.entry("окт", "октября"),
             Map.entry("ноя", "ноября"),
             Map.entry("дек", "декабря"));
-    private static final Map<String, LocalDate> TODAYORYESTERDAY =
-            Map.of("сегодня", LocalDate.now(),
-                    "вчера", LocalDate.now().minusDays(1));
+    private static final DateTimeFormatter FORMATTER =
+            DateTimeFormatter.ofPattern("d MMMM yy HH:mm");
 
     @Override
     public LocalDateTime parse(String parse) {
-        DateTimeFormatter formatter =
-                DateTimeFormatter.ofPattern("d MMMM yy HH:mm");
+        Map<String, LocalDate> dayMap =
+                Map.of("сегодня", LocalDate.now(),
+                        "вчера", LocalDate.now().minusDays(1));
         parse = parse.replaceAll(",", "");
         String[] arr = parse.split(" ");
         String changedParse;
         LocalDateTime rsl;
-        if (MONTHS.containsKey(arr[1])) {
+        boolean monthsContainsDate = MONTHS.containsKey(arr[1]);
+        boolean dayMapContainsDate = dayMap.containsKey(arr[0]);
+        if (!monthsContainsDate && !dayMapContainsDate) {
+            throw new IllegalArgumentException("There not found correct date.");
+        }
+        if (monthsContainsDate) {
             changedParse = parse.replace(arr[1], MONTHS.get(arr[1]));
-            rsl = LocalDateTime.parse(changedParse, formatter);
+            rsl = LocalDateTime.parse(changedParse, FORMATTER);
         } else {
-            if (TODAYORYESTERDAY.containsKey(arr[0])) {
-                String[] timeArr = arr[1].split(":");
-                rsl = TODAYORYESTERDAY.get(arr[0]).atTime(Integer.parseInt(timeArr[0]),
-                        Integer.parseInt(timeArr[1]));
-            } else {
-                throw new IllegalArgumentException("There not found correct date.");
-            }
+            String[] timeArr = arr[1].split(":");
+            rsl = dayMap.get(arr[0]).atTime(Integer.parseInt(timeArr[0]),
+                    Integer.parseInt(timeArr[1]));
         }
         return rsl;
     }
