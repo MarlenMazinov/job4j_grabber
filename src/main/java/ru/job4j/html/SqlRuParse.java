@@ -4,12 +4,21 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import ru.job4j.grabber.utils.DateTimeParser;
 import ru.job4j.grabber.utils.SqlRuDateTimeParser;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.StringJoiner;
 
-public class SqlRuParse {
+public class SqlRuParse implements Parse {
+    private final DateTimeParser dateTimeParser;
+
+    public SqlRuParse(DateTimeParser dateTimeParser) {
+        this.dateTimeParser = dateTimeParser;
+    }
+
     public static void main(String[] args) throws Exception {
         Document doc = Jsoup.connect("https://www.sql.ru/forum/job-offers").get();
         getInformation(doc);
@@ -31,7 +40,8 @@ public class SqlRuParse {
         }
     }
 
-    public static Post getPost(String link) throws IOException {
+    @Override
+    public Post detail(String link) throws IOException {
         Post post = new Post();
         Document doc = Jsoup.connect(link).get();
         post.setId(Integer.parseInt(doc.select("td.msgFooter").get(0).child(0).text()));
@@ -50,5 +60,18 @@ public class SqlRuParse {
         SqlRuDateTimeParser parser = new SqlRuDateTimeParser();
         post.setCreated(parser.parse(arr[0]));
         return post;
+    }
+
+    @Override
+    public List<Post> list(String link) throws IOException {
+        List<Post> rsl = new ArrayList<>();
+        Document doc = Jsoup.connect(link).get();
+        Elements row = doc.select("tr");
+        for (Element tr : row) {
+            if (tr.children().hasClass("postslisttopic")) {
+                rsl.add(detail(tr.child(1).child(0).attr("href")));
+            }
+        }
+        return rsl;
     }
 }
