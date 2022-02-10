@@ -42,36 +42,53 @@ public class SqlRuParse implements Parse {
     }
 
     @Override
-    public Post detail(String link) throws IOException {
+    public Post detail(String link) {
         Post post = new Post();
-        Document doc = Jsoup.connect(link).get();
-        post.setId(Integer.parseInt(doc.select("td.msgFooter").get(0).child(0).text()));
-        post.setTitle(doc.select("td.messageHeader").get(0).text());
-        post.setLink(link);
-        Elements msgBody = doc.select("td.msgBody").get(1).children();
-        StringJoiner stringJoiner = new StringJoiner(System.lineSeparator());
-        stringJoiner.add(doc.select("td.msgBody").get(1).text());
-        for (Element el : msgBody) {
-            if (el.hasText()) {
-                stringJoiner.add(el.text());
+        try {
+            Document doc = Jsoup.connect(link).get();
+            post.setId(Integer.parseInt(doc.select("td.msgFooter").get(0).child(0).text()));
+            post.setTitle(doc.select("td.messageHeader").get(0).text());
+            post.setLink(link);
+            Elements msgBody = doc.select("td.msgBody").get(1).children();
+            StringJoiner stringJoiner = new StringJoiner(System.lineSeparator());
+            stringJoiner.add(doc.select("td.msgBody").get(1).text());
+            for (Element el : msgBody) {
+                if (el.hasText()) {
+                    stringJoiner.add(el.text());
+                }
             }
+            post.setDescription(stringJoiner.toString());
+            String[] arr = doc.select("td.msgFooter").get(0).text().split("\u00A0");
+            SqlRuDateTimeParser parser = new SqlRuDateTimeParser();
+            post.setCreated(parser.parse(arr[0]));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        post.setDescription(stringJoiner.toString());
-        String[] arr = doc.select("td.msgFooter").get(0).text().split("\u00A0");
-        SqlRuDateTimeParser parser = new SqlRuDateTimeParser();
-        post.setCreated(parser.parse(arr[0]));
         return post;
     }
 
     @Override
-    public List<Post> list(String link) throws IOException {
+    public List<Post> list(String link) {
         List<Post> rsl = new ArrayList<>();
-        Document doc = Jsoup.connect(link).get();
-        Elements row = doc.select("tr");
-        for (Element tr : row) {
-            if (tr.children().hasClass("postslisttopic")) {
-                rsl.add(detail(tr.child(1).child(0).attr("href")));
+        try {
+            Document doc = Jsoup.connect(link).get();
+            Elements pages = doc.select("td:contains(Страницы)").get(0).children();
+            for (int i = 1; i < 5; i++) {
+                doc = Jsoup.connect(pages.get(i).attr("href")).get();
+                Elements row = doc.select("tr");
+                for (Element tr : row) {
+                    if (tr.children().hasClass("postslisttopic")) {
+                        String title = detail(tr.child(1).child(0).attr("href")).getTitle().
+                                toLowerCase();
+                        if (!title.contains("javascript")
+                                && title.contains("java")) {
+                            rsl.add(detail(tr.child(1).child(0).attr("href")));
+                        }
+                    }
+                }
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return rsl;
     }
