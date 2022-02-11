@@ -6,7 +6,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import ru.job4j.grabber.DateTimeParser;
 import ru.job4j.grabber.Parse;
-import ru.job4j.grabber.SqlRuDateTimeParser;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -46,22 +45,13 @@ public class SqlRuParse implements Parse {
         Post post = new Post();
         try {
             Document doc = Jsoup.connect(link).get();
-            post.setId(Integer.parseInt(doc.select("td.msgFooter").get(0).child(0).text()));
             post.setTitle(doc.select("td.messageHeader").get(0).text());
             post.setLink(link);
-            Elements msgBody = doc.select("td.msgBody").get(1).children();
-            StringJoiner stringJoiner = new StringJoiner(System.lineSeparator());
-            stringJoiner.add(doc.select("td.msgBody").get(1).text());
-            for (Element el : msgBody) {
-                if (el.hasText()) {
-                    stringJoiner.add(el.text());
-                }
-            }
-            post.setDescription(stringJoiner.toString());
-            String[] arr = doc.select("td.msgFooter").get(0).text().split("\u00A0");
-            SqlRuDateTimeParser parser = new SqlRuDateTimeParser();
-            post.setCreated(parser.parse(arr[0]));
-        } catch (IOException e) {
+            post.setDescription(doc.select("td.msgBody").get(1).text());
+            String[] arr = doc.select("td.msgFooter").get(0).text().
+                    replaceAll("\u00A0", "").split("\\[");
+            post.setCreated(dateTimeParser.parse(arr[0]));
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return post;
@@ -78,11 +68,12 @@ public class SqlRuParse implements Parse {
                 Elements row = doc.select("tr");
                 for (Element tr : row) {
                     if (tr.children().hasClass("postslisttopic")) {
-                        String title = detail(tr.child(1).child(0).attr("href")).getTitle().
-                                toLowerCase();
+                        String postLink = tr.child(1).child(0).attr("href");
+                        String title = Jsoup.connect(postLink).get().
+                                select("td.messageHeader").get(0).text().toLowerCase();
                         if (!title.contains("javascript")
                                 && title.contains("java")) {
-                            rsl.add(detail(tr.child(1).child(0).attr("href")));
+                            rsl.add(detail(postLink));
                         }
                     }
                 }
