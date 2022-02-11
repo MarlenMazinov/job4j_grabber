@@ -1,7 +1,7 @@
-create table if not exists post (
-id serial primary key,
+create table if not exists posts (
+id serial unique,
 name text,
 text text,
-link text UNIQUE,
+link text unique,
 created timestamp
 );
