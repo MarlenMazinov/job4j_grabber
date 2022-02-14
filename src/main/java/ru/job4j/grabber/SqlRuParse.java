@@ -4,14 +4,10 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import ru.job4j.grabber.DateTimeParser;
-import ru.job4j.grabber.Parse;
-import ru.job4j.html.Post;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringJoiner;
 
 public class SqlRuParse implements Parse {
     private final DateTimeParser dateTimeParser;

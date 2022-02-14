@@ -1,7 +1,5 @@
 package ru.job4j.grabber;
 
-import ru.job4j.html.Post;
-
 import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
