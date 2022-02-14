@@ -1,7 +1,6 @@
 package ru.job4j.grabber;
 
 import ru.job4j.html.Post;
-import ru.job4j.html.SqlRuParse;
 
 import java.io.InputStream;
 import java.sql.*;
