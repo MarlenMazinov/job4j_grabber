@@ -10,7 +10,6 @@ public class Emulator {
         AbstractCache<String, String> cashe = new DirFileCache(userInput);
         while (!"Exit".equals(userInput)) {
             System.out.println("Insert file's name, please.");
-
             userInput = in.nextLine();
             System.out.println(cashe.load(userInput));
             System.out.println("Do you want continue program? Enter \"Y\" or \"N\".");
