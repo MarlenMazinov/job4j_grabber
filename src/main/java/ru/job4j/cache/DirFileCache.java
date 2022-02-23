@@ -17,10 +17,10 @@ public class DirFileCache extends AbstractCache<String, String> {
         if (rsl == null) {
             try {
                 rsl = Files.readString(Path.of(cachingDir, key));
+                put(key, rsl);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            put(key, rsl);
         }
         return rsl;
     }
