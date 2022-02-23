@@ -11,7 +11,7 @@ public class Emulator {
         while (!"Exit".equals(userInput)) {
             System.out.println("Insert file's name, please.");
             userInput = in.nextLine();
-            System.out.println(cashe.load(userInput));
+            System.out.println(cashe.get(userInput));
             System.out.println("Do you want continue program? Enter \"Y\" or \"N\".");
             userInput = in.nextLine();
             while (!"Y".equals(userInput) && !"N".equals(userInput)) {
