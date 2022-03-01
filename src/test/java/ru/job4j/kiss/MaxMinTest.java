@@ -11,9 +11,9 @@ public class MaxMinTest {
     @Test
     public void whenFindMaxInteger() {
         List<Integer> list = new ArrayList<>();
-        list.add(5);
+        list.add(2);
         list.add(0);
-        list.add(1);
+        list.add(5);
         MaxMin maxMin = new MaxMin();
         MyComparator myComparator = new MyComparator();
         assertEquals(maxMin.max(list, myComparator).intValue(), 5);

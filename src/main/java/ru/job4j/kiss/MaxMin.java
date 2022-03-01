@@ -14,7 +14,7 @@ public class MaxMin {
 
     public <T> T find(List<T> value, Comparator<T> comparator) {
         T rsl = value.get(0);
-        for (int i = 1; i < value.size() - 1; i++) {
+        for (int i = 1; i < value.size(); i++) {
             if (comparator.compare(rsl, value.get(i)) < 0) {
                 rsl = value.get(i);
             }
