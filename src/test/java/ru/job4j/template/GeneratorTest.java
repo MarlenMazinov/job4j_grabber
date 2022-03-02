@@ -7,7 +7,16 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GeneratorTest extends TestCase {
+public class GeneratorTest {
+
+    @Ignore
+    @Test(expected = IllegalArgumentException.class)
+    public void whenKeysMatchMap() {
+        Generator generator = new SomeGenerator();
+        Map<String, String> map = new HashMap<>();
+        map.put("name", "Petr Arsentev");
+        generator.produce("My name is ${name}", map);
+    }
 
     @Ignore
     @Test(expected = IllegalArgumentException.class)
