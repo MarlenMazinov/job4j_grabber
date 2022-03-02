@@ -1,8 +1,8 @@
 package ru.job4j.template;
 
-import junit.framework.TestCase;
 import org.junit.Ignore;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,12 +10,12 @@ import java.util.Map;
 public class GeneratorTest {
 
     @Ignore
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenKeysMatchMap() {
         Generator generator = new SomeGenerator();
         Map<String, String> map = new HashMap<>();
         map.put("name", "Petr Arsentev");
-        generator.produce("My name is ${name}", map);
+        assertEquals(generator.produce("My name is ${name}", map), "My name is Petr Arsentev");
     }
 
     @Ignore
