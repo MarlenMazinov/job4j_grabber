@@ -28,7 +28,7 @@ public class CinemaTest {
         Account account = new AccountCinema();
         Cinema cinema = new Cinema3D();
         Calendar date = Calendar.getInstance();
-        date.set(2020, 10, 10, 23, 00);
+        date.set(2020, 02, 30, 23, 00);
         Ticket ticket = cinema.buy(account, 1, 1, date);
     }
 
@@ -38,7 +38,7 @@ public class CinemaTest {
         Account account = new AccountCinema();
         Cinema cinema = new Cinema3D();
         Calendar date = Calendar.getInstance();
-        date.set(2020, 10, 10, 23, 00);
+        date.set(2020, 1500, 10, 23, 00);
         Ticket ticket = cinema.buy(account, 1, 1, date);
     }
 
@@ -48,18 +48,20 @@ public class CinemaTest {
         Account account = new AccountCinema();
         Cinema cinema = new Cinema3D();
         Calendar date = Calendar.getInstance();
-        date.set(2020, 10, 10, 23, 00);
+        date.set(2020, 10, 2500, 23, 00);
         Ticket ticket = cinema.buy(account, 1, 1, date);
     }
 
     @Ignore
     @Test(expected = IllegalArgumentException.class)
     public void whenBuyBusyPlace() {
-        Account account = new AccountCinema();
+        Account firstAccount = new AccountCinema();
+        Account secondAccount = new AccountCinema();
         Cinema cinema = new Cinema3D();
         Calendar date = Calendar.getInstance();
         date.set(2020, 10, 10, 23, 00);
-        Ticket ticket = cinema.buy(account, 1, 1, date);
+        Ticket firstTicket = cinema.buy(firstAccount, 1, 1, date);
+        Ticket secondTicket = cinema.buy(secondAccount, 1, 1, date);
     }
 
     @Ignore
