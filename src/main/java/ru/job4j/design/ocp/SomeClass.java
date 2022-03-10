@@ -7,7 +7,7 @@ package ru.job4j.design.ocp;
 с исспользованием параметра:
 
 public void save(Т information) {
-        //some code that save information
+        some code that save information
 }
 */
 
