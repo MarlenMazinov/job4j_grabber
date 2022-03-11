@@ -3,11 +3,11 @@ package ru.job4j.design.srp;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class ReportForHRDepartment implements Report {
+public class ReportForHRDepartmentToString implements Report {
 
     private Store store;
 
-    public ReportForHRDepartment(Store store) {
+    public ReportForHRDepartmentToString(Store store) {
         this.store = store;
     }
 
