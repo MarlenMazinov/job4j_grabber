@@ -5,28 +5,32 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import javax.xml.bind.JAXBException;
+import java.time.ZoneOffset;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 public class ReportForDevDepartmentToXmlTest {
 
     @Test
     public void whenReportIsCorrect() throws JAXBException {
         MemStore store = new MemStore();
-        Calendar date = Calendar.getInstance();
-        date.set(2020, 10, 25, 23, 00, 00);
-        date.set(Calendar.MILLISECOND, 0);
+        Calendar date = new GregorianCalendar(2022, Calendar.MARCH, 11);
+        date.setTimeZone(TimeZone.getTimeZone(ZoneOffset.of("+3")));
         Employee worker = new Employee("Ivan", date, date, 100);
         store.add(worker);
         Report report = new ReportForDevDepartmentToXml(store);
-        String expect = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n"
-                + "<employers>\n"
-                + "    <employee>\n"
-                + "        <fired>2020-11-25T23:00:00+03:00</fired>\n"
-                + "        <hired>2020-11-25T23:00:00+03:00</hired>\n"
-                + "        <name>Ivan</name>\n"
-                + "        <salary>100.0</salary>\n"
-                + "    </employee>\n"
-                + "</employers>\n";
+        String expect = """
+                <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+                <employers>
+                    <employee>
+                        <fired>2022-03-11T00:00:00+03:00</fired>
+                        <hired>2022-03-11T00:00:00+03:00</hired>
+                        <name>Ivan</name>
+                        <salary>100.0</salary>
+                    </employee>
+                </employers>
+                """;
         assertEquals(expect, report.generate(em -> true));
     }
 }
