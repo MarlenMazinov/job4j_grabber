@@ -39,12 +39,12 @@ public class ControllQuality {
                 counter++;
                 continue;
             }
-            if (timeToExpiration > 0.7) {
+            if (timeToExpiration > 0.25) {
                 shopQualifier.move(food);
                 counter++;
                 continue;
             }
-            if (timeToExpiration > 0.1) {
+            if (timeToExpiration > 0.001) {
                 food.setDiscount(0.5f);
                 shopQualifier.move(food);
                 counter++;
