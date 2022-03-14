@@ -1,20 +1,34 @@
 package ru.job4j.ood.lsp.food;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
-public class Trash {
-    private static List<Food> list = new ArrayList<>();
+public class Trash implements Store {
+    private List<Food> list = new ArrayList<>();
+    private Calendar now;
 
-    public static List<Food> getList() {
-        return list;
+    public Trash(Calendar now) {
+        this.now = now;
     }
 
-    public static void setList(List<Food> list) {
-        Trash.list = list;
+    @Override
+    public boolean accept(Food food) {
+        return getExpirationPercent(food, now) <= 0.001;
     }
 
-    public static void add(Food food) {
-        list.add(food);
+    @Override
+    public List<Food> getProducts() {
+        return new ArrayList<>(list);
+    }
+
+    @Override
+    public boolean add(Food food) {
+        boolean rsl = false;
+        if (accept(food)) {
+            list.add(food);
+            rsl = true;
+        }
+        return rsl;
     }
 }
