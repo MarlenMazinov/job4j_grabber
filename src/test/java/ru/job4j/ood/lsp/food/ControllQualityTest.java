@@ -18,7 +18,7 @@ public class ControllQualityTest {
         Food milk = new Milk("Milk", milkCreate, milkExp, 100f, 0f);
         products.add(milk);
         ControllQuality controllQuality = new ControllQuality(products);
-        controllQuality.qualify(products);
+        controllQuality.qualify();
         int index = controllQuality.getStores().get(0).getProducts().indexOf(milk);
         assertEquals(milk, controllQuality.getStores().get(0).getProducts().get(0));
     }
@@ -33,7 +33,7 @@ public class ControllQualityTest {
         Food milk = new Milk("Milk", milkCreate, milkExp, 100f, 0f);
         products.add(milk);
         ControllQuality controllQuality = new ControllQuality(products);
-        controllQuality.qualify(products);
+        controllQuality.qualify();
         int index = controllQuality.getStores().get(1).getProducts().indexOf(milk);
         assertEquals(milk, controllQuality.getStores().get(1).getProducts().get(index));
     }
@@ -48,7 +48,7 @@ public class ControllQualityTest {
         Food milk = new Milk("Milk", milkCreate, milkExp, 100f, 0f);
         products.add(milk);
         ControllQuality controllQuality = new ControllQuality(products);
-        controllQuality.qualify(products);
+        controllQuality.qualify();
         int index = controllQuality.getStores().get(1).getProducts().indexOf(milk);
         assertEquals(0.5f,
                 controllQuality.getStores().get(1).getProducts().get(index).getDiscount(), 0.001);
@@ -63,7 +63,7 @@ public class ControllQualityTest {
         Calendar milkExp = controllQuality.getNow();
         Food milk = new Milk("Milk", milkCreate, milkExp, 100f, 0f);
         products.add(milk);
-        controllQuality.qualify(products);
+        controllQuality.qualify();
         int index = controllQuality.getStores().get(2).getProducts().indexOf(milk);
         assertEquals(milk, controllQuality.getStores().get(2).getProducts().get(index));
     }
