@@ -45,13 +45,13 @@ public class ControllQualityTest {
         milkCreate.add(Calendar.DATE, -27);
         Calendar milkExp = Calendar.getInstance();
         milkExp.add(Calendar.DATE, 3);
-        Food milk = new Milk("Milk", milkCreate, milkExp, 100f, 0f);
+        Food milk = new Milk("Milk", milkCreate, milkExp, 100f, 0.25f);
         products.add(milk);
         ControllQuality controllQuality = new ControllQuality(products);
         controllQuality.qualify();
         int index = controllQuality.getStores().get(1).getProducts().indexOf(milk);
-        assertEquals(0.5f,
-                controllQuality.getStores().get(1).getProducts().get(index).getDiscount(), 0.001);
+        assertEquals(25f,
+                controllQuality.getStores().get(1).getProducts().get(index).getPrice(), 0.001);
     }
 
     @Test

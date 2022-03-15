@@ -1,7 +1,6 @@
 package ru.job4j.ood.lsp.food;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class Shop implements Store {
@@ -22,7 +21,7 @@ public class Shop implements Store {
         boolean rsl = false;
         if (accept(food)) {
             if (getExpirationPercent(food) <= 0.25) {
-                food.setDiscount(0.5f);
+                food.setPrice((food.getPrice()) * food.getDiscount());
             }
             list.add(food);
             rsl = true;
