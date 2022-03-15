@@ -30,56 +30,56 @@ public class SimpleParkingTest {
 
     @Test
     public void whenAddTruckSize2OnTruckPlace() {
-        Car car = new TrackWithSize2();
+        Car car = new Truck(2);
         SimpleParking parking = new SimpleParking(0, 1);
         assertTrue(parking.add(car));
     }
 
     @Test
     public void whenAddTruckSize3OnTruckPlace() {
-        Car car = new TrackWithSize3();
+        Car car = new Truck(3);
         SimpleParking parking = new SimpleParking(0, 1);
         assertTrue(parking.add(car));
     }
 
     @Test
     public void whenAddTruckSize2OnCarPlace() {
-        Car car = new TrackWithSize2();
+        Car car = new Truck(2);
         SimpleParking parking = new SimpleParking(2, 0);
         assertTrue(parking.add(car));
     }
 
     @Test
     public void whenAddTruckSize3OnCarPlace() {
-        Car car = new TrackWithSize3();
+        Car car = new Truck(3);
         SimpleParking parking = new SimpleParking(3, 0);
         assertTrue(parking.add(car));
     }
 
     @Test
     public void whenAddTruckSize2OnAndNoAvailablePlaces() {
-        Car car = new TrackWithSize2();
+        Car car = new Truck(2);
         SimpleParking parking = new SimpleParking(0, 0);
         assertFalse(parking.add(car));
     }
 
     @Test
     public void whenAddTruckSize3OnAndNoAvailablePlaces() {
-        Car car = new TrackWithSize3();
+        Car car = new Truck(3);
         SimpleParking parking = new SimpleParking(0, 0);
         assertFalse(parking.add(car));
     }
 
     @Test
     public void whenAddTruckSize2OnAndAvailable1CarPlace() {
-        Car car = new TrackWithSize2();
+        Car car = new Truck(2);
         SimpleParking parking = new SimpleParking(1, 0);
         assertFalse(parking.add(car));
     }
 
     @Test
     public void whenAddTruckSize3OnAndAvailable2CarPlace() {
-        Car car = new TrackWithSize3();
+        Car car = new Truck(3);
         SimpleParking parking = new SimpleParking(2, 0);
         assertFalse(parking.add(car));
     }
@@ -87,8 +87,8 @@ public class SimpleParkingTest {
     @Test
     public void whenAddCarAndTrucks() {
         Car smallCar = new SmallCar();
-        Car truckSize2 = new TrackWithSize2();
-        Car truckSize3 = new TrackWithSize3();
+        Car truckSize2 = new Truck(2);
+        Car truckSize3 = new Truck(3);
         SimpleParking parking = new SimpleParking(6, 2);
         parking.add(smallCar);
         parking.add(truckSize2);
