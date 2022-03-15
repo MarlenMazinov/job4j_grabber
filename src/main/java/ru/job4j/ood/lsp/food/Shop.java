@@ -6,15 +6,10 @@ import java.util.List;
 
 public class Shop implements Store {
     private List<Food> list = new ArrayList<>();
-    private Calendar now;
-
-    public Shop(Calendar now) {
-        this.now = now;
-    }
 
     @Override
     public boolean accept(Food food) {
-        return getExpirationPercent(food, now) <= 0.75 && getExpirationPercent(food, now) > 0.001;
+        return getExpirationPercent(food) <= 0.75 && getExpirationPercent(food) > 0.001;
     }
 
     @Override
@@ -26,7 +21,7 @@ public class Shop implements Store {
     public boolean add(Food food) {
         boolean rsl = false;
         if (accept(food)) {
-            if (getExpirationPercent(food, now) <= 0.25) {
+            if (getExpirationPercent(food) <= 0.25) {
                 food.setDiscount(0.5f);
             }
             list.add(food);

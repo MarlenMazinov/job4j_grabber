@@ -11,9 +11,10 @@ public interface Store {
 
     boolean add(Food food);
 
-    default double getExpirationPercent(Food food, Calendar now) {
+    default double getExpirationPercent(Food food) {
         return ((double) (food.getExpiryDate().getTimeInMillis()
-                - now.getTimeInMillis())) / ((double) (food.getExpiryDate().getTimeInMillis()
+                - Calendar.getInstance().getTimeInMillis()))
+                / ((double) (food.getExpiryDate().getTimeInMillis()
                 - food.getCreateDate().getTimeInMillis()));
     }
 }

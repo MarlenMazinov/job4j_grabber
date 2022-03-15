@@ -60,7 +60,7 @@ public class ControllQualityTest {
         ControllQuality controllQuality = new ControllQuality(products);
         Calendar milkCreate = Calendar.getInstance();
         milkCreate.add(Calendar.DATE, -30);
-        Calendar milkExp = controllQuality.getNow();
+        Calendar milkExp = Calendar.getInstance();
         Food milk = new Milk("Milk", milkCreate, milkExp, 100f, 0f);
         products.add(milk);
         controllQuality.qualify();

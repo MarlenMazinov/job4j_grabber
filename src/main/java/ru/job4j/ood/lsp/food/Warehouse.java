@@ -6,15 +6,10 @@ import java.util.List;
 
 public class Warehouse implements Store {
     private List<Food> list = new ArrayList<>();
-    private Calendar now;
-
-    public Warehouse(Calendar now) {
-        this.now = now;
-    }
 
     @Override
     public boolean accept(Food food) {
-        return getExpirationPercent(food, now) > 0.75;
+        return getExpirationPercent(food) > 0.75;
     }
 
     @Override
