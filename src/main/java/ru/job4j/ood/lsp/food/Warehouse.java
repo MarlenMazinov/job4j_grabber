@@ -20,7 +20,7 @@ public class Warehouse implements Store {
     @Override
     public boolean add(Food food) {
         boolean rsl = false;
-        if (accept(food)) {
+        if (accept(food) && !list.contains(food)) {
             list.add(food);
             rsl = true;
         }

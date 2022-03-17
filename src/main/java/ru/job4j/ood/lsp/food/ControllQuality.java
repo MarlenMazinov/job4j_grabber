@@ -19,6 +19,10 @@ public class ControllQuality {
         return stores;
     }
 
+    public List<Food> getProducts() {
+        return products;
+    }
+
     public void distribute(Food food, List<Store> stores) {
         stores.forEach(store -> {
             if (store.accept(food)) {
@@ -27,7 +31,15 @@ public class ControllQuality {
         });
     }
 
-    public void qualify() {
-        products.forEach(product -> distribute(product, stores));
+    public void qualify(List<Food> foodList) {
+        foodList.forEach(product -> distribute(product, stores));
+    }
+
+    public void resort() {
+        while (true) {
+            for (Store store : stores) {
+                qualify(store.getProducts());
+            }
+        }
     }
 }

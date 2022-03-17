@@ -19,7 +19,7 @@ public class Shop implements Store {
     @Override
     public boolean add(Food food) {
         boolean rsl = false;
-        if (accept(food)) {
+        if (accept(food) && !list.contains(food)) {
             if (getExpirationPercent(food) <= 0.25) {
                 food.setPrice((food.getPrice()) * food.getDiscount());
             }
