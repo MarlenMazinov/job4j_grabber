@@ -65,7 +65,6 @@ public class ControllQualityTest {
         products.add(milk);
         controllQuality.qualify(controllQuality.getProducts());
         int index = controllQuality.getStores().get(2).getProducts().indexOf(milk);
-        controllQuality.resort();
         assertEquals(milk, controllQuality.getStores().get(2).getProducts().get(index));
     }
 }

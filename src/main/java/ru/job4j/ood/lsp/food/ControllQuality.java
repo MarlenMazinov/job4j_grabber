@@ -1,7 +1,6 @@
 package ru.job4j.ood.lsp.food;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class ControllQuality {
@@ -32,13 +31,20 @@ public class ControllQuality {
     }
 
     public void qualify(List<Food> foodList) {
-        foodList.forEach(product -> distribute(product, stores));
+        for (int i = 0; i < foodList.size(); i++) {
+            Food food = foodList.get(i);
+            distribute(food, stores);
+            foodList.remove(food);
+        }
     }
 
     public void resort() {
-        while (true) {
+        while (!stores.get(0).getProducts().isEmpty() || !stores.get(1).getProducts().isEmpty()) {
             for (Store store : stores) {
-                qualify(store.getProducts());
+                List<Food> foods = store.getProducts();
+                if (!foods.isEmpty()) {
+                    qualify(foods);
+                }
             }
         }
     }
