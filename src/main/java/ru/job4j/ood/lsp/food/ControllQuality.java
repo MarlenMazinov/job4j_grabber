@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ControllQuality {
-    private List<Store> stores = new ArrayList<>();
     private List<Food> products;
+    private List<Store> stores = new ArrayList<>();
 
     public ControllQuality(List<Food> products) {
         this.products = products;
