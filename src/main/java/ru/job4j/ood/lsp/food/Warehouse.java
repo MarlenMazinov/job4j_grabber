@@ -1,7 +1,6 @@
 package ru.job4j.ood.lsp.food;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class Warehouse implements Store {
@@ -24,6 +23,13 @@ public class Warehouse implements Store {
             list.add(food);
             rsl = true;
         }
+        return rsl;
+    }
+
+    @Override
+    public List<Food> clear() {
+        List<Food> rsl = new ArrayList<>(list);
+        list.clear();
         return rsl;
     }
 }

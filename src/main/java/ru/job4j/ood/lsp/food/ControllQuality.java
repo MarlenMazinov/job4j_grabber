@@ -3,6 +3,9 @@ package ru.job4j.ood.lsp.food;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * ukyuklyu
+ */
 public class ControllQuality {
     private List<Food> products;
     private List<Store> stores = new ArrayList<>();
@@ -31,21 +34,19 @@ public class ControllQuality {
     }
 
     public void qualify(List<Food> foodList) {
-        for (int i = 0; i < foodList.size(); i++) {
-            Food food = foodList.get(i);
+        for (Food food : foodList) {
             distribute(food, stores);
-            foodList.remove(food);
         }
     }
 
     public void resort() {
         while (!stores.get(0).getProducts().isEmpty() || !stores.get(1).getProducts().isEmpty()) {
+            List<Food> products = new ArrayList<>();
             for (Store store : stores) {
-                List<Food> foods = store.getProducts();
-                if (!foods.isEmpty()) {
-                    qualify(foods);
-                }
+                products.addAll(store.clear());
             }
+            products.forEach(product -> distribute(product, stores));
+            products.clear();
         }
     }
 }

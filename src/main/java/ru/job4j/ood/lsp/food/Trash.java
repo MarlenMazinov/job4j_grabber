@@ -26,4 +26,11 @@ public class Trash implements Store {
         }
         return rsl;
     }
+
+    @Override
+    public List<Food> clear() {
+        List<Food> rsl = new ArrayList<>(list);
+        list.clear();
+        return rsl;
+    }
 }

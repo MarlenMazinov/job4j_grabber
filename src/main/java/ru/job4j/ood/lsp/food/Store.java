@@ -11,6 +11,8 @@ public interface Store {
 
     boolean add(Food food);
 
+    List<Food> clear();
+
     default double getExpirationPercent(Food food) {
         return ((double) (food.getExpiryDate().getTimeInMillis()
                 - Calendar.getInstance().getTimeInMillis()))
