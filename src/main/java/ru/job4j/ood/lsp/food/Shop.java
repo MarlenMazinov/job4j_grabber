@@ -21,7 +21,7 @@ public class Shop implements Store {
         boolean rsl = false;
         if (accept(food) && !list.contains(food)) {
             if (getExpirationPercent(food) <= 0.25) {
-                food.setPrice((food.getPrice()) * food.getDiscount());
+                food.setPrice((food.getPrice()) * (1 - food.getDiscount()));
             }
             list.add(food);
             rsl = true;

@@ -1,28 +1,20 @@
 package ru.job4j.ood.lsp.food;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * ukyuklyu
  */
 public class ControllQuality {
     private List<Food> products;
-    private List<Store> stores = new ArrayList<>();
+    private List<Store> stores;
 
-    public ControllQuality(List<Food> products) {
+    public ControllQuality(List<Food> products, List<Store> stores) {
         this.products = products;
-        stores.add(new Warehouse());
-        stores.add(new Shop());
-        stores.add(new Trash());
-    }
-
-    public List<Store> getStores() {
-        return stores;
-    }
-
-    public List<Food> getProducts() {
-        return products;
+        this.stores = stores;
     }
 
     public void distribute(Food food, List<Store> stores) {
@@ -40,13 +32,18 @@ public class ControllQuality {
     }
 
     public void resort() {
-        while (!stores.get(0).getProducts().isEmpty() || !stores.get(1).getProducts().isEmpty()) {
-            List<Food> products = new ArrayList<>();
-            for (Store store : stores) {
-                products.addAll(store.clear());
+        Map<Class<? extends Store>, Integer> map = new HashMap<>();
+        stores.forEach(store -> map.put(store.getClass(), stores.indexOf(store)));
+        if (map.containsKey(Warehouse.class) && map.containsKey(Shop.class)) {
+            while (!stores.get(map.get(Warehouse.class)).getProducts().isEmpty()
+                    || !stores.get(map.get(Shop.class)).getProducts().isEmpty()) {
+                List<Food> products = new ArrayList<>();
+                for (Store store : stores) {
+                    products.addAll(store.clear());
+                }
+                products.forEach(product -> distribute(product, stores));
+                products.clear();
             }
-            products.forEach(product -> distribute(product, stores));
-            products.clear();
         }
     }
 }
