@@ -21,7 +21,7 @@ public class ControllQualityTest {
         milkExp.add(Calendar.DATE, 27);
         Food milk = new Milk("Milk", milkCreate, milkExp, 100f, 0f);
         products.add(milk);
-        ControllQuality controllQuality = new ControllQuality(products, stores);
+        ControllQuality controllQuality = new ControllQuality(stores);
         controllQuality.qualify(products);
         assertTrue(stores.get(0).getProducts().contains(milk));
     }
@@ -39,7 +39,7 @@ public class ControllQualityTest {
         milkExp.add(Calendar.DATE, 15);
         Food milk = new Milk("Milk", milkCreate, milkExp, 100f, 0f);
         products.add(milk);
-        ControllQuality controllQuality = new ControllQuality(products, stores);
+        ControllQuality controllQuality = new ControllQuality(stores);
         controllQuality.qualify(products);
         assertTrue(stores.get(1).getProducts().contains(milk));
     }
@@ -57,7 +57,7 @@ public class ControllQualityTest {
         milkExp.add(Calendar.DATE, 3);
         Food milk = new Milk("Milk", milkCreate, milkExp, 100f, 0.25f);
         products.add(milk);
-        ControllQuality controllQuality = new ControllQuality(products, stores);
+        ControllQuality controllQuality = new ControllQuality(stores);
         controllQuality.qualify(products);
         assertTrue(stores.get(1).getProducts().contains(milk) && milk.getPrice() == 75f);
     }
@@ -69,7 +69,7 @@ public class ControllQualityTest {
         stores.add(new Warehouse());
         stores.add(new Shop());
         stores.add(new Trash());
-        ControllQuality controllQuality = new ControllQuality(products, stores);
+        ControllQuality controllQuality = new ControllQuality(stores);
         Calendar milkCreate = Calendar.getInstance();
         milkCreate.add(Calendar.DATE, -30);
         Calendar milkExp = Calendar.getInstance();
